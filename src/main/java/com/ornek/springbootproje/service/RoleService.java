@@ -24,9 +24,9 @@ public class RoleService {
 //        return roleRepository.findByUserId(userId);
 //    }
 //
-//    public List<Role> findAll() {
-//        return roleRepository.findAll();
-//    }
+    public List<Role> findAll() {
+        return roleRepository.findAll();
+    }
 //
 //    public List<Role> findRolesWithPermissions() {
 //        return roleRepository.findRolesWithPermissions();

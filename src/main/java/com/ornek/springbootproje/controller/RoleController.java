@@ -33,12 +33,12 @@ public class RoleController {
 //        return ResponseEntity.ok(roles);
 //    }
 //
-//    // Tüm rolleri alma
-//    @GetMapping
-//    public ResponseEntity<List<Role>> getAllRoles() {
-//        List<Role> roles = roleService.findAll();
-//        return ResponseEntity.ok(roles);
-//    }
+    // Tüm rolleri alma
+    @GetMapping
+    public ResponseEntity<List<Role>> getAllRoles() {
+        List<Role> roles = roleService.findAll();
+        return ResponseEntity.ok(roles);
+    }
 
     // Rolleri izinlerle birlikte alma
 //    @GetMapping("/permissions")

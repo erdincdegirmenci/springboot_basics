@@ -1,5 +1,5 @@
 -- Kullanıcılar tablosu
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS  users (
     id SERIAL PRIMARY KEY,
     firstname VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
@@ -20,42 +20,42 @@ CREATE TABLE users (
 );
 
 -- Roller tablosu
-CREATE TABLE roles (
+CREATE TABLE IF NOT EXISTS  roles (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     description TEXT
 );
 
 -- İzinler tablosu
-CREATE TABLE permissions (
+CREATE TABLE IF NOT EXISTS  permissions (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     description TEXT
 );
 
 -- Rol izinleri tablosu
-CREATE TABLE rolepermissions (
+CREATE TABLE IF NOT EXISTS  rolepermissions (
     id SERIAL PRIMARY KEY,
     roleid INT REFERENCES roles(id) ON DELETE CASCADE,
     permissionid INT REFERENCES permissions(id) ON DELETE CASCADE
 );
 
 -- Kullanıcı roller tablosu
-CREATE TABLE userroles (
+CREATE TABLE IF NOT EXISTS  userroles (
     id SERIAL PRIMARY KEY,
     userid INT,
     roleid INT
 );
 
 -- Denetim (Audit) tablosu
-CREATE TABLE audits (
+CREATE TABLE IF NOT EXISTS  audits (
     id SERIAL PRIMARY KEY,
     type VARCHAR(50) NOT NULL,
     description TEXT
 );
 
 -- Kullanıcı denetimleri tablosu
-CREATE TABLE useraudits (
+CREATE TABLE IF NOT EXISTS  useraudits (
     id SERIAL PRIMARY KEY,
     userid INT,
     auditid INT,
@@ -65,14 +65,14 @@ CREATE TABLE useraudits (
 );
 
 -- Hesap doğrulama tablosu
-CREATE TABLE accountverifications (
+CREATE TABLE IF NOT EXISTS  accountverifications (
     id SERIAL PRIMARY KEY,
     userid INT,
     url VARCHAR(255) NOT NULL
 );
 
 -- Şifre sıfırlama doğrulama tablosu
-CREATE TABLE resetpasswordverifications (
+CREATE TABLE IF NOT EXISTS  resetpasswordverifications (
     id SERIAL PRIMARY KEY,
     userid INT,
     url VARCHAR(255) NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE resetpasswordverifications (
 );
 
 -- İki faktörlü doğrulama tablosu
-CREATE TABLE twofactorverifications (
+CREATE TABLE IF NOT EXISTS  twofactorverifications (
     id SERIAL PRIMARY KEY,
     userid INT,
     code VARCHAR(10) NOT NULL,

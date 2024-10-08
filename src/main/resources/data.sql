@@ -1,3 +1,13 @@
+-- 1. Audits tablosundaki tüm verileri sil
+DELETE FROM Audits;
+
+-- 2. Roles tablosundaki tüm verileri sil
+DELETE FROM Roles;
+
+-- 3. Permissions tablosundaki tüm verileri sil
+DELETE FROM Permissions;
+
+-- 4. Dataları ekle.
 INSERT INTO Audits (id, type, description) VALUES
 (1, 'LOGIN', 'User logged in successfully'),
 (2, 'LOGIN_FAILURE', 'User login attempt failed'),
