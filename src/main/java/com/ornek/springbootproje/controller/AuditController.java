@@ -21,15 +21,15 @@ public class AuditController {
 
     // Kullanıcı aktivitesi ekleme
     @PostMapping
-    public ResponseEntity<UserAudit> addUserAudit(@RequestBody UserAudit userAudit) {
-        UserAudit savedAudit = auditService.addUserAudit(userAudit);
+    public ResponseEntity<UserAudit> AddUserAudit(@RequestBody UserAudit userAudit) {
+        UserAudit savedAudit = auditService.AddUserAudit(userAudit);
         return ResponseEntity.ok(savedAudit);
     }
 
     // Kullanıcı ID'sine göre aktiviteleri alma
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<UserAudit>> getUserAuditsByUserId(@PathVariable Long userId) {
-        List<UserAudit> userAudits = auditService.getUserAuditsByUserId(userId);
+    public ResponseEntity<List<UserAudit>> GetUserAuditsByUserId(@PathVariable Long userId) {
+        List<UserAudit> userAudits = auditService.GetUserAuditsByUserId(userId);
         return ResponseEntity.ok(userAudits);
     }
 }

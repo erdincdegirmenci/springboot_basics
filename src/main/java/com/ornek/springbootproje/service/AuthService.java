@@ -27,15 +27,18 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String login(String email, String password) throws Exception {
+    public String Login(String email, String password) throws Exception {
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isEmpty() || user.get().getIslock()) {
             throw new BadCredentialsException("Kullanıcı kilitli veya mevcut değil.");
         }
 
-        if (!passwordEncoder.matches(password, user.get().getPassword())) {
-            user.get().setFailedLoginAttemp(user.get().getFailedLoginAttemp() + 1);
-            if (user.get().getFailedLoginAttemp() >= 3) {
+        if (password.equals(user.get().getPassword())) {
+            if (user.get().getFailedloginattemp() == null) {
+                user.get().setFailedloginattemp(0);
+            }
+            user.get().setFailedloginattemp(user.get().getFailedloginattemp() + 1);
+            if (user.get().getFailedloginattemp() >= 3) {
                 user.get().setIslock(true);
                 userRepository.save(user.get()); // Kullanıcıyı güncelle
                 throw new BadCredentialsException("Kullanıcı kilitli.");
@@ -45,7 +48,7 @@ public class AuthService {
         }
 
         // Başarılı giriş sonrası giriş denemelerini sıfırla
-        user.get().setFailedLoginAttemp(0);
+        user.get().setFailedloginattemp(0);
         userRepository.save(user.get());
 
         return jwtUtil.generateToken(user.get());

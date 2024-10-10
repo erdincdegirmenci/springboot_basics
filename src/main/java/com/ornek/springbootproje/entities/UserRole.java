@@ -10,9 +10,9 @@ public class UserRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
-    private Long userId;
-    private int roleId;
+    Long userid;
+    Integer roleid;
 
 }

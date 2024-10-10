@@ -14,11 +14,16 @@ public class MailService {
         this.mailSender = mailSender;
     }
 
-    public void sendEmail(String to, String subject, String body) {
+    public void SendEmail(String to, String subject, String body) throws Exception {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject(subject);
         message.setText(body);
-        mailSender.send(message);
+
+        try {
+            mailSender.send(message);
+        } catch (MailException e) {
+            throw new Exception("E-posta gönderiminde bir hata oluştu: " + e.getMessage(), e);
+        }
     }
 }

@@ -21,8 +21,8 @@ public class RoleController {
 
     // Yeni rol ekleme
     @PostMapping
-    public ResponseEntity<Role> addRole(@RequestBody Role role) {
-        Role savedRole = roleService.save(role);
+    public ResponseEntity<Role> AddRole(@RequestBody Role role) {
+        Role savedRole = roleService.AddRole(role);
         return ResponseEntity.ok(savedRole);
     }
 
@@ -35,8 +35,8 @@ public class RoleController {
 //
     // Tüm rolleri alma
     @GetMapping
-    public ResponseEntity<List<Role>> getAllRoles() {
-        List<Role> roles = roleService.findAll();
+    public ResponseEntity<List<Role>> GetAllRoles() {
+        List<Role> roles = roleService.GetAllRoles();
         return ResponseEntity.ok(roles);
     }
 

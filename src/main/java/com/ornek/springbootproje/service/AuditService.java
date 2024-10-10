@@ -22,7 +22,7 @@ public class AuditService {
         this.httpServletRequest = httpServletRequest;
     }
 
-    public UserAudit addUserAudit(UserAudit userAudit) {
+    public UserAudit AddUserAudit(UserAudit userAudit) {
         String deviceInfo = httpServletRequest.getHeader("User-Agent"); // Cihaz bilgisi
         String clientIp = httpServletRequest.getRemoteAddr(); // İstemci IP adresi
         userAudit.setDevice(deviceInfo);
@@ -31,11 +31,11 @@ public class AuditService {
         return userAuditRepository.save(userAudit);
     }
 
-    public List<UserAudit> getUserAuditsByUserId(Long userId) {
+    public List<UserAudit> GetUserAuditsByUserId(Long userId) {
         return userAuditRepository.findByUserId(userId);
     }
 
-    public List<UserAudit> getAllUserAudits() {
+    public List<UserAudit> GetAllUserAudits() {
         return userAuditRepository.findAll();
     }
 }

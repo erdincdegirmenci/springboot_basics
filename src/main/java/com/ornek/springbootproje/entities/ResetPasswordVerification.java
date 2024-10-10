@@ -14,9 +14,9 @@ public class ResetPasswordVerification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
-    private Long userId;
-    private String url;
-    private LocalDateTime expirationDate;
+    Long userId;
+    String url;
+    LocalDateTime expirationDate;
 }

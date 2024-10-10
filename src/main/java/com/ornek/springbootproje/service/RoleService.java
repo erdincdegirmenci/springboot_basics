@@ -16,7 +16,7 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    public Role save(Role role) {
+    public Role AddRole(Role role) {
         return roleRepository.save(role);
     }
 
@@ -24,7 +24,7 @@ public class RoleService {
 //        return roleRepository.findByUserId(userId);
 //    }
 //
-    public List<Role> findAll() {
+    public List<Role> GetAllRoles() {
         return roleRepository.findAll();
     }
 //

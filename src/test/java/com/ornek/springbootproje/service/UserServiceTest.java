@@ -55,7 +55,7 @@ public class UserServiceTest {
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
         Exception exception = assertThrows(Exception.class, () -> {
-            userService.addUser(user);
+            userService.AddUser(user);
         });
 
         String expectedMessage = "Bu e-posta adresi zaten kayıtlı.";
@@ -72,7 +72,7 @@ public class UserServiceTest {
         when(userRepository.findByEmail(user.getEmail())).thenReturn(null);
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        User savedUser = userService.addUser(user);
+        User savedUser = userService.AddUser(user);
 
         assertNotNull(savedUser);
         verify(userRepository, times(1)).save(user);
@@ -89,7 +89,7 @@ public class UserServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         // Act: Call the service method
-        User foundUser = userService.getUserById(1L);
+        User foundUser = userService.GetUserById(1L);
 
         // Assert: Verify the result
         assertNotNull(foundUser);
@@ -101,7 +101,7 @@ public class UserServiceTest {
     public void testGetUserById_NotFound() {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
-        User user = userService.getUserById(1L);
+        User user = userService.GetUserById(1L);
 
         assertNull(user);
     }
@@ -110,7 +110,7 @@ public class UserServiceTest {
     public void testDeleteUser_Success() {
         Long userId = 1L;
 
-        userService.deleteUser(userId);
+        userService.DeleteUser(userId);
 
         verify(userRepository, times(1)).deleteById(userId);
     }
@@ -118,7 +118,7 @@ public class UserServiceTest {
     @Test
     public void testVerifyAccount_Success() throws Exception {
         AccountVerification accountVerification = new AccountVerification();
-        accountVerification.setUserId(1L);
+        accountVerification.setUserid(1L);
 
         User user = new User();
         user.setId(1L);
@@ -126,9 +126,9 @@ public class UserServiceTest {
 
         when(accountVerificationRepository.findByUrl(anyString())).thenReturn(Optional.of(accountVerification));
 
-        when(userRepository.findById(accountVerification.getUserId())).thenReturn(Optional.of(user));
+        when(userRepository.findById(accountVerification.getUserid())).thenReturn(Optional.of(user));
 
-        boolean result = userService.verifyAccount("verificationUrl");
+        boolean result = userService.VerifyAccount("verificationUrl");
 
         assertTrue(result);
         assertTrue(user.getIsactive());
@@ -139,7 +139,7 @@ public class UserServiceTest {
     public void testVerifyAccount_Fail() throws Exception {
         when(accountVerificationRepository.findByUrl(anyString())).thenReturn(Optional.empty());
 
-        boolean result = userService.verifyAccount("invalidUrl");
+        boolean result = userService.VerifyAccount("invalidUrl");
 
         assertFalse(result);
     }

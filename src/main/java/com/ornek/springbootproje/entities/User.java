@@ -38,5 +38,5 @@ public class User {
 
     String createuser;
     String lastupdateuser;
-    Integer FailedLoginAttemp;
+    Integer failedloginattemp;
 }

@@ -17,7 +17,7 @@ public class TwoFactorVerificationService {
         this.verificationRepository = verificationRepository;
     }
 
-    public TwoFactorVerification sendVerificationCode(Long userId) throws Exception {
+    public TwoFactorVerification SendVerificationCode(Long userId) throws Exception {
         // Rastgele bir doğrulama kodu oluştur
         String verificationCode = String.valueOf(new Random().nextInt(999999)); // 6 haneli kod
         LocalDateTime expirationDate = LocalDateTime.now().plusMinutes(5); // 5 dakika geçerli
@@ -31,7 +31,7 @@ public class TwoFactorVerificationService {
         return verificationRepository.save(verification);
     }
 
-    public boolean verifyCode(Long userId, String code) {
+    public boolean VerifyCode(Long userId, String code) {
         TwoFactorVerification verification = verificationRepository.findByUserIdAndCode(userId, code);
 
         return verification != null && verification.getExpirationDate().isAfter(LocalDateTime.now());

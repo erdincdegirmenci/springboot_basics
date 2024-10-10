@@ -14,11 +14,11 @@ public class UserAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
-    private Long userId;
-    private Long auditId;
-    private String device;
-    private String ipAddress;
-    private Date createDate;
+    Long userId;
+    Long auditId;
+    String device;
+    String ipAddress;
+    Date createDate;
 }

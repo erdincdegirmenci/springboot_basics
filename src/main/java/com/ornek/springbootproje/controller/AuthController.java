@@ -1,5 +1,6 @@
 package com.ornek.springbootproje.controller;
 
+import com.ornek.springbootproje.entities.User;
 import com.ornek.springbootproje.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,8 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) throws Exception {
-        String token = authService.login(email, password);
+    public ResponseEntity<String> Login(@RequestBody User user) throws Exception {
+        String token = authService.Login(user.getEmail(), user.getPassword());
         return ResponseEntity.ok(token);
     }
 }

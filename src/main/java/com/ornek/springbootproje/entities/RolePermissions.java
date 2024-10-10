@@ -10,9 +10,9 @@ public class RolePermissions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
-    private Long roleid;
-    private int permissionid;
+    Long roleid;
+    int permissionid;
 
 }

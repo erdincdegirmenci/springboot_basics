@@ -14,10 +14,10 @@ public class TwoFactorVerification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
-    private Long userId;
-    private String code;
-    private LocalDateTime expirationDate;
+    Long userId;
+    String code;
+    LocalDateTime expirationDate;
 
 }
