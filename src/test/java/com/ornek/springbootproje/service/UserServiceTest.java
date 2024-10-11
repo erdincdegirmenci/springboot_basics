@@ -76,7 +76,7 @@ public class UserServiceTest {
 
         assertNotNull(savedUser);
         verify(userRepository, times(1)).save(user);
-        verify(mailService, times(1)).sendEmail(anyString(), anyString(), anyString());
+        verify(mailService, times(1)).SendEmail(anyString(), anyString(), anyString());
     }
 
     @Test
