@@ -23,8 +23,8 @@ public class AuditService {
     }
 
     public UserAudit AddUserAudit(UserAudit userAudit) {
-        String deviceInfo = httpServletRequest.getHeader("User-Agent"); // Cihaz bilgisi
-        String clientIp = httpServletRequest.getRemoteAddr(); // İstemci IP adresi
+        String deviceInfo = httpServletRequest.getHeader("User-Agent");
+        String clientIp = httpServletRequest.getRemoteAddr();
         userAudit.setDevice(deviceInfo);
         userAudit.setIpAddress(clientIp);
         userAudit.setCreateDate(new Date());

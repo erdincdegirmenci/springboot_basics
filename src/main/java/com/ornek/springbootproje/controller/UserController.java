@@ -53,10 +53,10 @@ public class UserController {
     }
 
     // Kullanıcı güncelleme
-    @PutMapping("/updateuser/{id}")
-    public ResponseEntity<User> UpdateUser(@PathVariable Long id, @RequestBody User user) {
+    @PatchMapping("/updateuser/{id}")
+    public ResponseEntity<User> UpdateUser(@PathVariable Long id, @RequestBody UserUpdateDto user) {
         try {
-            User updatedUser = userService.UpdateUser(user);
+            User updatedUser = userService.UpdateUser(id, user);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -131,7 +131,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token geçersiz veya süresi dolmuş.");
     }
 
-    @PostMapping("/send-verification-code")
+    @PostMapping("/send-mfa-verification-code")
     public ResponseEntity<String> SendVerificationCode(@RequestParam Long userId) {
         try {
             // Kullanıcı bilgisini al

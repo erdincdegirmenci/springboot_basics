@@ -4,6 +4,7 @@ import com.ornek.springbootproje.entities.*;
 import com.ornek.springbootproje.enums.RoleTypes;
 import com.ornek.springbootproje.repository.*;
 import com.ornek.springbootproje.security.JwtTokenUtil;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +25,9 @@ public class UserService {
     private final AccountVerificationRepository accountVerificationRepository;
     private final ResetPasswordVerificationRepository resetPasswordVerificationRepository;
     private final MailService mailService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private JwtTokenUtil jwtUtil;
@@ -82,8 +86,30 @@ public class UserService {
     }
 
 
-    public User UpdateUser(User user) {
-        return userRepository.save(user);
+    public User UpdateUser(Long userid, UserUpdateDto  userUpdateDto) {
+        Optional<User> existingUserOpt = userRepository.findById(userid);
+
+        if (existingUserOpt.isPresent()) {
+            User existingUser = existingUserOpt.get();
+
+            // E-posta adresi değişmişse
+            if (!existingUser.getEmail().equals(userUpdateDto.getEmail())) {
+                // Yeni e-posta adresinin başka bir kullanıcıda olup olmadığını kontrol et
+                var isExistUser = userRepository.findByEmail(userUpdateDto.getEmail());
+                if (isExistUser.isPresent()) {
+                    throw new IllegalArgumentException("Bu e-posta adresi zaten kullanılıyor: " + userUpdateDto.getEmail());
+                }
+            }
+
+            modelMapper.map(userUpdateDto, existingUser);
+
+            existingUser.setUpdatedate(LocalDateTime.now());
+            existingUser.setLastupdateuser(existingUser.getLastupdateuser());
+
+            return userRepository.save(existingUser);
+        } else {
+            throw new RuntimeException("Kullanıcı bulunamadı: " + userid);
+        }
     }
 
 

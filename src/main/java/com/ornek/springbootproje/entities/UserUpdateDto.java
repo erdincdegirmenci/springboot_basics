@@ -1,22 +1,13 @@
 package com.ornek.springbootproje.entities;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-
-import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Data
-@Entity
-@Table(name = "users", schema = "public")
-@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
-
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-
+public class UserUpdateDto {
     @NotBlank(message = "Firstname is required")
     String firstname;
     @NotBlank(message = "Lastname is required")
