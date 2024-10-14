@@ -12,8 +12,6 @@ import java.util.Optional;
 public interface AccountVerificationRepository extends JpaRepository<AccountVerification, Long> {
 
     AccountVerification save(AccountVerification accountVerification);
-    @Query(name = "AccountVerification.findByUserId")
-    List<AccountVerification> findByUserId(Long userId);
-    @Query(name = "AccountVerification.findByUrl")
+    List<AccountVerification> findByUserid(Long userid);
     Optional<AccountVerification> findByUrl(String url);
 }

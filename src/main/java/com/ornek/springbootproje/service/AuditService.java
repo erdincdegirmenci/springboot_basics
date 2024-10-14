@@ -26,13 +26,13 @@ public class AuditService {
         String deviceInfo = httpServletRequest.getHeader("User-Agent");
         String clientIp = httpServletRequest.getRemoteAddr();
         userAudit.setDevice(deviceInfo);
-        userAudit.setIpAddress(clientIp);
-        userAudit.setCreateDate(new Date());
+        userAudit.setIpaddress(clientIp);
+        userAudit.setCreatedate(new Date());
         return userAuditRepository.save(userAudit);
     }
 
     public List<UserAudit> GetUserAuditsByUserId(Long userId) {
-        return userAuditRepository.findByUserId(userId);
+        return userAuditRepository.findByUserid(userId);
     }
 
     public List<UserAudit> GetAllUserAudits() {

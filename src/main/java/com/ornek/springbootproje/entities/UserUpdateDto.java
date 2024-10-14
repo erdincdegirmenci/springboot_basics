@@ -1,6 +1,5 @@
 package com.ornek.springbootproje.entities;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 

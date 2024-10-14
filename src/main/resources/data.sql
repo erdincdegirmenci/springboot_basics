@@ -11,13 +11,7 @@ DELETE FROM Permissions;
 INSERT INTO Audits (id, type, description) VALUES
 (1, 'LOGIN', 'User logged in successfully'),
 (2, 'LOGIN_FAILURE', 'User login attempt failed'),
-(3, 'LOGIN_SUCCESS', 'User logged in successfully'),
-(4, 'PROFILE_UPDATE', 'User updated profile details'),
-(5, 'PROFILE_PICTURE_UPDATE', 'User updated profile picture'),
-(6, 'ROLE_UPDATE', 'User role updated'),
-(7, 'ACCOUNT_SETTINGS_UPDATE', 'User updated account settings'),
-(8, 'PASSWORD_UPDATE', 'User updated password'),
-(9, 'MFA_UPDATE', 'User updated multi-factor authentication settings');
+(3, 'LOGIN_SUCCESS', 'User logged in successfully');
 
 INSERT INTO Roles (id, name, description) VALUES
 (1, 'ROLE_USER', 'Basic user with limited permissions'),

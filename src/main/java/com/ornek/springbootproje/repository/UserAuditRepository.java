@@ -12,6 +12,5 @@ public interface UserAuditRepository extends JpaRepository<UserAudit, Long> {
 
     UserAudit save(UserAudit userAudit);
     List<UserAudit> findAll();
-    @Query(name = "UserAudit.findByUserId")
-    List<UserAudit> findByUserId(Long userId);
+    List<UserAudit> findByUserid(Long userid);
 }

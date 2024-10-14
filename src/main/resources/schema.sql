@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS  users (
     createdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     createuser VARCHAR(100),
-    lastupdateuser VARCHAR(100)
+    lastupdateuser VARCHAR(100),
+    loginfailedattemp INT
 );
 
 -- Roller tablosu
@@ -68,7 +69,8 @@ CREATE TABLE IF NOT EXISTS  useraudits (
 CREATE TABLE IF NOT EXISTS  accountverifications (
     id SERIAL PRIMARY KEY,
     userid INT,
-    url VARCHAR(255) NOT NULL
+    url VARCHAR(255) NOT NULL,
+    createdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Şifre sıfırlama doğrulama tablosu
@@ -76,13 +78,5 @@ CREATE TABLE IF NOT EXISTS  resetpasswordverifications (
     id SERIAL PRIMARY KEY,
     userid INT,
     url VARCHAR(255) NOT NULL,
-    expirationdate TIMESTAMP NOT NULL
-);
-
--- İki faktörlü doğrulama tablosu
-CREATE TABLE IF NOT EXISTS  twofactorverifications (
-    id SERIAL PRIMARY KEY,
-    userid INT,
-    code VARCHAR(10) NOT NULL,
     expirationdate TIMESTAMP NOT NULL
 );

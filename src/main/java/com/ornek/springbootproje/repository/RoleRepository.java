@@ -11,8 +11,5 @@ import java.util.List;
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
     Role save(Role role);
-//    List<Role> findByUserId(Long userId);
     List<Role> findAll();
-//    List<Role> findRolesWithPermissions();
-//    List<Role> findPermissionsByRoleId(Long roleId);
 }

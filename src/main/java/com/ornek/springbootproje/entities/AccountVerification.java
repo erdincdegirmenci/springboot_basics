@@ -8,8 +8,6 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "accountverifications", schema = "public")
-@NamedQuery(name = "AccountVerification.findByUserId",query = "SELECT a FROM AccountVerification a WHERE a.userid = :userid")
-@NamedQuery(name = "AccountVerification.findByUrl", query = "SELECT a FROM AccountVerification a WHERE a.url = :url")
 public class AccountVerification {
 
     @Id
@@ -18,5 +16,5 @@ public class AccountVerification {
 
     Long userid;
     String url;
-    LocalDateTime createdat;
+    LocalDateTime createdate;
 }

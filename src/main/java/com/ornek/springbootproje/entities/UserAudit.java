@@ -9,16 +9,15 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "useraudits", schema = "public")
-@NamedQuery(name = "UserAudit.findByUserId", query = "SELECT u FROM UserAudit u WHERE u.userId = :userId")
 public class UserAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    Long userId;
-    Long auditId;
+    Long userid;
+    Integer auditid;
     String device;
-    String ipAddress;
-    Date createDate;
+    String ipaddress;
+    Date createdate;
 }

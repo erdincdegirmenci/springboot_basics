@@ -18,15 +18,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final MailService mailService;
-    private final TwoFactorVerificationService twoFactorVerificationService;
     private final LogManager logManager;
 
     @Autowired
-    public UserController(UserService userService, MailService mailService, TwoFactorVerificationService twoFactorVerificationService, LogManager logManager) {
+    public UserController(UserService userService, LogManager logManager) {
         this.userService = userService;
-        this.mailService = mailService;
-        this.twoFactorVerificationService = twoFactorVerificationService;
         this.logManager = logManager;
     }
 
@@ -113,7 +109,8 @@ public class UserController {
         return userService.RequestPasswordReset(email);
     }
 
-    @GetMapping("/verify-password-reset")
+    // Şifre sıfırlama mail onay
+    @PostMapping("/verify-password-reset")
     public ResponseEntity<String> VerifyPasswordReset(@RequestParam String token) {
         if (token != null && userService.IsTokenValid(token)) {
             return ResponseEntity.ok("Token geçerli, şifre sıfırlama sayfasına yönlendiriliyor.");
@@ -121,6 +118,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token geçersiz veya süresi dolmuş.");
     }
 
+    //şifre sıfırlama adımı
     @PostMapping("/reset-password")
     public ResponseEntity<String> ResetPassword(@RequestParam String token, @RequestParam String newPassword) throws Exception {
         if (token != null && userService.IsTokenValid(token)) {
@@ -129,31 +127,5 @@ public class UserController {
             return ResponseEntity.ok("Şifre başarıyla sıfırlandı.");
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token geçersiz veya süresi dolmuş.");
-    }
-
-    @PostMapping("/send-mfa-verification-code")
-    public ResponseEntity<String> SendVerificationCode(@RequestParam Long userId) {
-        try {
-            // Kullanıcı bilgisini al
-            User user = userService.GetUserById(userId);
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Kullanıcı bulunamadı.");
-            }
-            var verification = twoFactorVerificationService.SendVerificationCode(userId);
-            String userPhoneNumber = user.getPhone(); // Kullanıcının telefon numarasını al
-            mailService.SendEmail(user.getEmail(), "MFA Aktivasyon", verification.getCode()); // Kullanıcıya mail gönderimi
-            return ResponseEntity.ok("Doğrulama kodu gönderildi.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Kod gönderiminde bir hata oluştu: " + e.getMessage());
-        }
-    }
-
-    @PostMapping("/verify-code")
-    public ResponseEntity<String> VerifyCode(@RequestParam Long userId, @RequestParam String code) {
-        boolean isValid = twoFactorVerificationService.VerifyCode(userId, code);
-        if (isValid) {
-            return ResponseEntity.ok("Kod geçerli. İki faktörlü kimlik doğrulama başarılı.");
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Geçersiz kod veya süresi dolmuş.");
     }
 }

@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "users", schema = "public")
-@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
-
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,5 +37,6 @@ public class User {
 
     String createuser;
     String lastupdateuser;
-    Integer failedloginattemp;
+    Integer loginfailedattemp;
+
 }

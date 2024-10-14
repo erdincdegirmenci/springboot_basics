@@ -1,6 +1,7 @@
 package com.ornek.springbootproje.service;
 
 import com.ornek.springbootproje.entities.*;
+import com.ornek.springbootproje.enums.AuditTypes;
 import com.ornek.springbootproje.enums.RoleTypes;
 import com.ornek.springbootproje.repository.*;
 import com.ornek.springbootproje.security.JwtTokenUtil;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
     private final AccountVerificationRepository accountVerificationRepository;
@@ -105,7 +107,6 @@ public class UserService {
 
             existingUser.setUpdatedate(LocalDateTime.now());
             existingUser.setLastupdateuser(existingUser.getLastupdateuser());
-
             return userRepository.save(existingUser);
         } else {
             throw new RuntimeException("Kullanıcı bulunamadı: " + userid);
@@ -173,20 +174,24 @@ public class UserService {
         }
 
         // ResetPasswordVerification kaydını oluştur
+        var token = GenerateToken(user.get());
         ResetPasswordVerification resetPasswordVerification = new ResetPasswordVerification();
-        resetPasswordVerification.setUserId(user.get().getId());
-        resetPasswordVerification.setUrl(GenerateResetPasswordUrl(user.get())); // URL oluştur
-        resetPasswordVerification.setExpirationDate(LocalDateTime.now().plusHours(24)); // 24 saat sonra süresi dolacak resetPasswordVerificationRepository.save(resetPasswordVerification);
+        resetPasswordVerification.setUserid(user.get().getId());
+        resetPasswordVerification.setUrl(token); // URL oluştur
+        resetPasswordVerification.setExpirationdate(LocalDateTime.now().plusHours(24)); // 24 saat sonra süresi dolacak resetPasswordVerificationRepository.save(resetPasswordVerification);
 
         // Kullanıcıya e-posta gönder
-        SendResetPasswordEmail(email, resetPasswordVerification.getUrl());
+        SendResetPasswordEmail(email, GenerateResetPasswordUrl(token));
+
+        resetPasswordVerificationRepository.save(resetPasswordVerification);
 
         return "Şifre sıfırlama isteği başarıyla gönderildi.";
     }
-
-    public String GenerateResetPasswordUrl(User user) {
-        String token = jwtUtil.generateToken(user);
-        return "https://yourapp.com/reset-password?token=" + token;
+    public String GenerateToken(User user) {
+        return jwtUtil.generateToken(user);
+    }
+    public String GenerateResetPasswordUrl(String token) {
+        return "https://erdincdegirmenci.com/reset-password?token=" + token;
     }
 
     private void SendResetPasswordEmail(String email, String resetPasswordUrl) throws Exception {
@@ -203,10 +208,10 @@ public class UserService {
 
     public boolean VerifyResetPasswordToken(String url) {
         // URL ile doğrulama kaydını kontrol et
-        ResetPasswordVerification verification = resetPasswordVerificationRepository.findByUrl(url);
-        if (verification != null) {
+        Optional<ResetPasswordVerification> verification = resetPasswordVerificationRepository.findByUrl(url);
+        if (verification.isEmpty()) {
             // Geçerlilik süresini kontrol et
-            return verification.getExpirationDate().isAfter(LocalDateTime.now());
+            return verification.get().getExpirationdate().isAfter(LocalDateTime.now());
         }
         return false;
     }
@@ -215,12 +220,12 @@ public class UserService {
         return expirationDate.before(new Date()); // Şu anki tarih, expirationDate'den önceyse token süresi dolmuş
     }
 
-    public boolean IsTokenValid(String token) {
-        ResetPasswordVerification verification = resetPasswordVerificationRepository.findByUrl(token);
-        if (verification == null) {
+    public boolean IsTokenValid(String url) {
+        Optional<ResetPasswordVerification> verification = resetPasswordVerificationRepository.findByUrl(url);
+        if (verification.isEmpty()) {
             return false;
         }
-        return !IsTokenExpired(Date.from(verification.getExpirationDate().atZone(ZoneId.systemDefault()).toInstant())); // Token geçerli mi?
+        return !IsTokenExpired(Date.from(verification.get().getExpirationdate().atZone(ZoneId.systemDefault()).toInstant())); // Token geçerli mi?
     }
 
     public Long GetUserIdByToken(String token) {

@@ -1,15 +1,8 @@
 package com.ornek.springbootproje.security;
 
-import com.ornek.springbootproje.entities.User;
-import com.ornek.springbootproje.repository.UserRepository;
-import com.ornek.springbootproje.service.JwtUserDetailsService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -20,7 +13,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,8 +35,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
 //                        .requestMatchers("api/auth/**").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("/api/users/addUser").permitAll()
+                        .requestMatchers("/api/users/adduser").permitAll()
                         .requestMatchers("/api/users/verify").permitAll()
+                        .requestMatchers("/api/users/request-password-reset").permitAll()
+                        .requestMatchers("/api/users/verify-password-reset").permitAll()
+                        .requestMatchers("/api/users/reset-password").permitAll()
                         .anyRequest().authenticated()
                 )  .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
