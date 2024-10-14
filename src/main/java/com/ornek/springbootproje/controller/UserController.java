@@ -50,7 +50,7 @@ public class UserController {
 
     // Kullanıcı güncelleme
     @PatchMapping("/updateuser/{id}")
-    public ResponseEntity<User> UpdateUser(@PathVariable Long id, @RequestBody UserUpdateDto user) {
+    public ResponseEntity<User> UpdateUser(@PathVariable Long id, @RequestBody UserUpdate user) {
         try {
             User updatedUser = userService.UpdateUser(id, user);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);

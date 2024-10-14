@@ -1,20 +1,16 @@
 package com.ornek.springbootproje.service;
 
 import com.ornek.springbootproje.entities.*;
-import com.ornek.springbootproje.enums.AuditTypes;
 import com.ornek.springbootproje.enums.RoleTypes;
 import com.ornek.springbootproje.repository.*;
 import com.ornek.springbootproje.security.JwtTokenUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -88,7 +84,7 @@ public class UserService {
     }
 
 
-    public User UpdateUser(Long userid, UserUpdateDto  userUpdateDto) {
+    public User UpdateUser(Long userid, UserUpdate userUpdateDto) {
         Optional<User> existingUserOpt = userRepository.findById(userid);
 
         if (existingUserOpt.isPresent()) {

@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class UserUpdateDto {
+public class UserUpdate {
     @NotBlank(message = "Firstname is required")
     String firstname;
     @NotBlank(message = "Lastname is required")
