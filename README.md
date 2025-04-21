@@ -1,4 +1,4 @@
-# 🌱 Spring Boot Project - `springbootproje`
+#  Spring Boot Project - `springbootproje`
 
 This project is a sample **Spring Boot 3.3.4** web application built using **Java 17**. It provides a structured backend setup with secure API endpoints, PostgreSQL database integration, validation mechanisms, and JWT-based authentication.
 
