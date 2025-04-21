@@ -27,7 +27,7 @@ This project is a sample **Spring Boot 3.3.4** web application built using **Jav
 
 ### 1. Clone the Repository
 
-```bash
+
 ```bash
 git clone https://github.com/erdincdegirmenci/springboot_basics.git
 cd springboot_basics
