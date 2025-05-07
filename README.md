@@ -4,7 +4,7 @@ This project is a sample **Spring Boot 3.3.4** web application built using **Jav
 
 ---
 
-## ⚙️ Technologies Used
+##  Technologies Used
 
 - **Java 17**
 - **Spring Boot 3.3.4**
@@ -23,7 +23,7 @@ This project is a sample **Spring Boot 3.3.4** web application built using **Jav
 
 ---
 
-## 📦 Getting Started
+##  Getting Started
 
 ### 1. Clone the Repository
 
